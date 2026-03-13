@@ -7,7 +7,7 @@ type Stage = Database['openrace']['Tables']['stages']['Row']
 type Race = Database['openrace']['Tables']['races']['Row']
 
 export async function createStage(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string,
   input: CreateStageInput
 ): Promise<Stage> {
@@ -26,7 +26,7 @@ export async function createStage(
 }
 
 export async function getStagesByRace(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string
 ): Promise<Stage[]> {
   const { data, error } = await supabase
@@ -39,7 +39,7 @@ export async function getStagesByRace(
 }
 
 export async function getStageByToken(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   token: string
 ): Promise<{ stage: Stage; role: 'start' | 'finish'; race: Race } | null> {
   // Check start_token
@@ -70,7 +70,7 @@ export async function getStageByToken(
 }
 
 export async function reorderStages(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   stageIds: string[]
 ): Promise<void> {
   for (let i = 0; i < stageIds.length; i++) {

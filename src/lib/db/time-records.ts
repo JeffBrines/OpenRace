@@ -5,7 +5,7 @@ import type { CreateTimeRecordInput } from '@/lib/validators/time-record'
 type TimeRecord = Database['openrace']['Tables']['time_records']['Row']
 
 export async function upsertTimeRecord(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   input: CreateTimeRecordInput
 ): Promise<TimeRecord> {
   const { data, error } = await supabase
@@ -18,7 +18,7 @@ export async function upsertTimeRecord(
 }
 
 export async function assignRider(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   timeRecordId: string,
   riderId: string
 ): Promise<TimeRecord> {
@@ -33,7 +33,7 @@ export async function assignRider(
 }
 
 export async function getTimeRecordsByStage(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   stageId: string,
   type?: 'start' | 'finish'
 ): Promise<TimeRecord[]> {
@@ -53,7 +53,7 @@ export async function getTimeRecordsByStage(
 }
 
 export async function getUnassignedByStage(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   stageId: string
 ): Promise<TimeRecord[]> {
   const { data, error } = await supabase

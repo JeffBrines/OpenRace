@@ -30,7 +30,7 @@ interface FastestSplits {
 }
 
 export async function getStageResults(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   stageId: string
 ): Promise<StageResultRow[]> {
   const { data, error } = await supabase
@@ -42,7 +42,7 @@ export async function getStageResults(
 }
 
 export async function getRaceResults(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string
 ): Promise<{ results: RaceResultRow[]; fastestSplits: FastestSplits }> {
   const { data, error } = await supabase
@@ -86,7 +86,7 @@ export async function getRaceResults(
 }
 
 export async function getRiderResult(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string,
   riderId: string
 ): Promise<{ result: RaceResultRow; stageDetails: StageResultRow[] } | null> {

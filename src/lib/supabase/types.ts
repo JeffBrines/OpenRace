@@ -16,8 +16,35 @@ export type Database = {
           created_at: string
           updated_at: string
         }
-        Insert: Omit<Database['openrace']['Tables']['races']['Row'], 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
-        Update: Partial<Database['openrace']['Tables']['races']['Insert']>
+        Insert: {
+          id?: string
+          name: string
+          date: string
+          type: 'enduro' | 'dh' | 'xc'
+          location?: string | null
+          organizer_id: string
+          categories: string[]
+          rider_id_mode: 'name_only' | 'bib_only' | 'both'
+          status?: 'draft' | 'active' | 'complete'
+          share_code: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          date?: string
+          type?: 'enduro' | 'dh' | 'xc'
+          location?: string | null
+          organizer_id?: string
+          categories?: string[]
+          rider_id_mode?: 'name_only' | 'bib_only' | 'both'
+          status?: 'draft' | 'active' | 'complete'
+          share_code?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       stages: {
         Row: {
@@ -31,8 +58,29 @@ export type Database = {
           finish_token: string
           created_at: string
         }
-        Insert: Omit<Database['openrace']['Tables']['stages']['Row'], 'id' | 'created_at'> & { id?: string; created_at?: string }
-        Update: Partial<Database['openrace']['Tables']['stages']['Insert']>
+        Insert: {
+          id?: string
+          race_id: string
+          name: string
+          order: number
+          distance?: number | null
+          elevation?: number | null
+          start_token: string
+          finish_token: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          race_id?: string
+          name?: string
+          order?: number
+          distance?: number | null
+          elevation?: number | null
+          start_token?: string
+          finish_token?: string
+          created_at?: string
+        }
+        Relationships: []
       }
       riders: {
         Row: {
@@ -45,8 +93,27 @@ export type Database = {
           gender: 'male' | 'female' | 'non_binary'
           created_at: string
         }
-        Insert: Omit<Database['openrace']['Tables']['riders']['Row'], 'id' | 'created_at'> & { id?: string; created_at?: string }
-        Update: Partial<Database['openrace']['Tables']['riders']['Insert']>
+        Insert: {
+          id?: string
+          race_id: string
+          name: string
+          bib?: string | null
+          category: string
+          age?: number | null
+          gender: 'male' | 'female' | 'non_binary'
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          race_id?: string
+          name?: string
+          bib?: string | null
+          category?: string
+          age?: number | null
+          gender?: 'male' | 'female' | 'non_binary'
+          created_at?: string
+        }
+        Relationships: []
       }
       time_records: {
         Row: {
@@ -58,8 +125,25 @@ export type Database = {
           device_id: string
           created_at: string
         }
-        Insert: Omit<Database['openrace']['Tables']['time_records']['Row'], 'created_at'> & { created_at?: string }
-        Update: Partial<Database['openrace']['Tables']['time_records']['Insert']>
+        Insert: {
+          id: string
+          stage_id: string
+          rider_id?: string | null
+          timestamp: number
+          type: 'start' | 'finish'
+          device_id: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          stage_id?: string
+          rider_id?: string | null
+          timestamp?: number
+          type?: 'start' | 'finish'
+          device_id?: string
+          created_at?: string
+        }
+        Relationships: []
       }
     }
     Views: {
@@ -73,6 +157,7 @@ export type Database = {
           status: string
           elapsed_ms: number | null
         }
+        Relationships: []
       }
       race_results: {
         Row: {
@@ -85,9 +170,10 @@ export type Database = {
           overall_rank: number
           category_rank: number
         }
+        Relationships: []
       }
     }
-    Functions: Record<string, never>
+    Functions: Record<string, { Args: Record<string, unknown>; Returns: unknown }>
     Enums: {
       race_type: 'enduro' | 'dh' | 'xc'
       race_status: 'draft' | 'active' | 'complete'

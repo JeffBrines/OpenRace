@@ -5,7 +5,7 @@ import type { CreateRiderInput } from '@/lib/validators/rider'
 type Rider = Database['openrace']['Tables']['riders']['Row']
 
 export async function createRider(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string,
   input: CreateRiderInput
 ): Promise<Rider> {
@@ -19,7 +19,7 @@ export async function createRider(
 }
 
 export async function createRidersBatch(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string,
   inputs: CreateRiderInput[]
 ): Promise<Rider[]> {
@@ -33,7 +33,7 @@ export async function createRidersBatch(
 }
 
 export async function getRidersByRace(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string
 ): Promise<Rider[]> {
   const { data, error } = await supabase
@@ -46,7 +46,7 @@ export async function getRidersByRace(
 }
 
 export async function updateRider(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   riderId: string,
   input: Partial<CreateRiderInput>
 ): Promise<Rider> {
@@ -61,7 +61,7 @@ export async function updateRider(
 }
 
 export async function deleteRider(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   riderId: string
 ): Promise<void> {
   const { error } = await supabase

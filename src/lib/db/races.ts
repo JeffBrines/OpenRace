@@ -6,7 +6,7 @@ import { generateShareCode } from '@/lib/utils/tokens'
 type Race = Database['openrace']['Tables']['races']['Row']
 
 export async function createRace(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   input: CreateRaceInput,
   organizerId: string
 ): Promise<Race> {
@@ -25,7 +25,7 @@ export async function createRace(
 }
 
 export async function getRacesByOrganizer(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   organizerId: string
 ): Promise<Race[]> {
   const { data, error } = await supabase
@@ -38,7 +38,7 @@ export async function getRacesByOrganizer(
 }
 
 export async function getRaceByShareCode(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   shareCode: string
 ): Promise<Race | null> {
   const { data, error } = await supabase
@@ -51,7 +51,7 @@ export async function getRaceByShareCode(
 }
 
 export async function getRaceById(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string
 ): Promise<Race | null> {
   const { data, error } = await supabase
@@ -64,7 +64,7 @@ export async function getRaceById(
 }
 
 export async function updateRaceStatus(
-  supabase: SupabaseClient<Database>,
+  supabase: SupabaseClient<Database, 'openrace'>,
   raceId: string,
   status: 'draft' | 'active' | 'complete'
 ): Promise<Race> {
