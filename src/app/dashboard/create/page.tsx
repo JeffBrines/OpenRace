@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { RaceInfoStep } from '@/components/race/wizard/race-info-step'
 import { StagesStep } from '@/components/race/wizard/stages-step'
 import { RidersStep } from '@/components/race/wizard/riders-step'
+import { ShareStep } from '@/components/race/wizard/share-step'
 import type { CreateRaceInput, CreateStageInput } from '@/lib/validators/race'
 import type { CreateRiderInput } from '@/lib/validators/rider'
 
@@ -20,7 +21,7 @@ const STEP_LABELS: Record<number, string> = {
   1: 'Race Info',
   2: 'Stages',
   3: 'Riders',
-  4: 'Review',
+  4: 'Share',
 }
 
 function StepIndicator({
@@ -54,19 +55,6 @@ function StepIndicator({
   )
 }
 
-function PlaceholderStep({ step }: { step: number }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center mb-4">
-        <span className="text-lg font-bold text-slate-400">{step}</span>
-      </div>
-      <h3 className="text-lg font-semibold text-slate-300 mb-2">
-        {STEP_LABELS[step]}
-      </h3>
-      <p className="text-sm text-slate-500">Coming soon — this step will be implemented next.</p>
-    </div>
-  )
-}
 
 export default function CreateRacePage() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -171,7 +159,15 @@ export default function CreateRacePage() {
             riderIdMode={wizardData.race.rider_id_mode}
           />
         )}
-        {currentStep === 4 && <PlaceholderStep step={4} />}
+        {currentStep === 4 && wizardData.race && (
+          <ShareStep
+            raceData={{
+              race: wizardData.race,
+              stages: wizardData.stages,
+              riders: wizardData.riders,
+            }}
+          />
+        )}
       </div>
     </div>
   )
