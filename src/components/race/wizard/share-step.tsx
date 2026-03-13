@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { QRCodeSVG } from 'qrcode.react'
 import { createRaceAction } from '@/app/dashboard/create/actions'
@@ -83,6 +83,7 @@ export function ShareStep({ raceData }: ShareStepProps) {
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [shareData, setShareData] = useState<ShareData | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const submittedRef = useRef(false)
 
   async function submit() {
     setStatus('loading')
@@ -110,6 +111,8 @@ export function ShareStep({ raceData }: ShareStepProps) {
   }
 
   useEffect(() => {
+    if (submittedRef.current) return
+    submittedRef.current = true
     submit()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
