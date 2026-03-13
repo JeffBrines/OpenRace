@@ -87,7 +87,7 @@ Volunteer links are constructed as: `openrace.app/time/{start_token}` and `openr
 | rider_id | uuid → Rider | **Nullable** — allows "stamp now, assign later" |
 | timestamp | bigint | Millisecond-precision capture time |
 | type | enum | `start`, `finish` |
-| device_id | string | Unique device identifier |
+| device_id | string | Random UUID generated on first load, persisted in localStorage |
 | synced | boolean | Whether record has been persisted to Supabase |
 | created_at | timestamp | Server-side insertion time |
 
@@ -125,7 +125,7 @@ Computed by pairing start and finish TimeRecords for the same rider + stage.
 | Volunteer | No | Open a stage timing link. Capture start/finish times. Assign riders to times. |
 | Spectator/Rider | No | View public results page. Share individual results. |
 
-**Only organizers need accounts.** Volunteer links are unauthenticated — anyone with the link can time. This is intentional for grassroots simplicity. Links contain unique tokens that scope the volunteer to a specific stage + role.
+**Only organizers need accounts.** Volunteer links are unauthenticated — anyone with the link can time. This is intentional for grassroots simplicity. Links contain unique tokens (high-entropy, 24+ character random strings) that scope the volunteer to a specific stage + role. Timing endpoints should be rate-limited to prevent abuse.
 
 ## Core Screens
 
@@ -220,6 +220,8 @@ Since we're computing time intervals (not comparing absolute moments across devi
 
 For races where sub-second accuracy is critical, an optional clock-offset calibration step can be added: both volunteers tap a "sync" button simultaneously, and the system records the offset between their device clocks.
 
+**Invariant:** Each stage's start and finish must each be timed by a single device for the duration of that stage. Token-scoped links naturally enforce this — one device opens one link. If a volunteer swaps phones mid-stage, clock drift between the two devices would corrupt elapsed times for riders who straddled the swap.
+
 ### Service Worker
 
 The Service Worker caches the entire app shell (HTML, CSS, JS). Even if the volunteer's browser restarts or they have no signal at all, the app loads from cache. TimeRecord data persists in IndexedDB across browser restarts.
@@ -251,7 +253,7 @@ Volunteer assigns wrong rider to a time. Editable from the timing screen — tap
 Volunteer accidentally double-taps. Two TimeRecords created with timestamps ~100ms apart. The system should surface these to the organizer as potential duplicates for resolution. A simple heuristic: two unassigned captures from the same device within 500ms are flagged.
 
 ### Day-of Registration
-New rider shows up on race day. Organizer adds them from the dashboard. Rider immediately appears in volunteer quick-pick lists (when online) or on next sync (when offline).
+New rider shows up on race day. Organizer adds them from the dashboard. Rider list updates flow to volunteer devices via Supabase Realtime subscription (when online) or are fetched on next successful sync (when offline — the sync flush also pulls the latest rider list).
 
 ### Device Battery / Browser Crash
 IndexedDB persists across browser restarts. Service Worker caches the app. Volunteer reopens the browser → app loads from cache → all previously captured times are still in IndexedDB → sync resumes.
