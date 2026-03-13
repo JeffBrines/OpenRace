@@ -98,7 +98,9 @@ export default function Home() {
         <p>
           OpenRace &mdash; Open source race timing &middot;{" "}
           <a
-            href="#"
+            href="https://github.com/JeffBrines/OpenRace"
+            target="_blank"
+            rel="noopener noreferrer"
             className="underline underline-offset-4 transition-colors hover:text-slate-300"
           >
             GitHub
