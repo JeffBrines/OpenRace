@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { RaceInfoStep } from '@/components/race/wizard/race-info-step'
+import { StagesStep } from '@/components/race/wizard/stages-step'
 import type { CreateRaceInput, CreateStageInput } from '@/lib/validators/race'
 import type { CreateRiderInput } from '@/lib/validators/rider'
 
@@ -79,6 +80,11 @@ export default function CreateRacePage() {
     setCurrentStep(2)
   }
 
+  function handleStagesNext(stages: CreateStageInput[]) {
+    setWizardData((prev) => ({ ...prev, stages }))
+    setCurrentStep(3)
+  }
+
   function handleBack() {
     setCurrentStep((prev) => Math.max(1, prev - 1))
   }
@@ -144,7 +150,13 @@ export default function CreateRacePage() {
             initialData={wizardData.race}
           />
         )}
-        {currentStep === 2 && <PlaceholderStep step={2} />}
+        {currentStep === 2 && wizardData.race && (
+          <StagesStep
+            onNext={handleStagesNext}
+            initialData={wizardData.stages.length > 0 ? wizardData.stages : undefined}
+            raceType={wizardData.race.type}
+          />
+        )}
         {currentStep === 3 && <PlaceholderStep step={3} />}
         {currentStep === 4 && <PlaceholderStep step={4} />}
       </div>
