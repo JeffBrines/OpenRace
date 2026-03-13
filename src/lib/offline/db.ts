@@ -15,7 +15,7 @@ interface OpenRaceDB extends DBSchema {
     }
     indexes: {
       'by-stage': string
-      'by-synced': boolean
+      'by-synced': number
     }
   }
 }
