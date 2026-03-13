@@ -1,5 +1,5 @@
 export type Database = {
-  public: {
+  openrace: {
     Tables: {
       races: {
         Row: {
@@ -16,8 +16,8 @@ export type Database = {
           created_at: string
           updated_at: string
         }
-        Insert: Omit<Database['public']['Tables']['races']['Row'], 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
-        Update: Partial<Database['public']['Tables']['races']['Insert']>
+        Insert: Omit<Database['openrace']['Tables']['races']['Row'], 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<Database['openrace']['Tables']['races']['Insert']>
       }
       stages: {
         Row: {
@@ -31,8 +31,8 @@ export type Database = {
           finish_token: string
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['stages']['Row'], 'id' | 'created_at'> & { id?: string; created_at?: string }
-        Update: Partial<Database['public']['Tables']['stages']['Insert']>
+        Insert: Omit<Database['openrace']['Tables']['stages']['Row'], 'id' | 'created_at'> & { id?: string; created_at?: string }
+        Update: Partial<Database['openrace']['Tables']['stages']['Insert']>
       }
       riders: {
         Row: {
@@ -45,8 +45,8 @@ export type Database = {
           gender: 'male' | 'female' | 'non_binary'
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['riders']['Row'], 'id' | 'created_at'> & { id?: string; created_at?: string }
-        Update: Partial<Database['public']['Tables']['riders']['Insert']>
+        Insert: Omit<Database['openrace']['Tables']['riders']['Row'], 'id' | 'created_at'> & { id?: string; created_at?: string }
+        Update: Partial<Database['openrace']['Tables']['riders']['Insert']>
       }
       time_records: {
         Row: {
@@ -58,8 +58,8 @@ export type Database = {
           device_id: string
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['time_records']['Row'], 'created_at'> & { created_at?: string }
-        Update: Partial<Database['public']['Tables']['time_records']['Insert']>
+        Insert: Omit<Database['openrace']['Tables']['time_records']['Row'], 'created_at'> & { created_at?: string }
+        Update: Partial<Database['openrace']['Tables']['time_records']['Insert']>
       }
     }
     Views: {

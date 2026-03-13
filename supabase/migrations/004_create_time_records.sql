@@ -1,3 +1,5 @@
+set search_path to openrace;
+
 create type time_record_type as enum ('start', 'finish');
 
 create table time_records (

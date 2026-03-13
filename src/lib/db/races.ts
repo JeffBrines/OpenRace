@@ -3,7 +3,7 @@ import type { Database } from '@/lib/supabase/types'
 import type { CreateRaceInput } from '@/lib/validators/race'
 import { generateShareCode } from '@/lib/utils/tokens'
 
-type Race = Database['public']['Tables']['races']['Row']
+type Race = Database['openrace']['Tables']['races']['Row']
 
 export async function createRace(
   supabase: SupabaseClient<Database>,

@@ -1,3 +1,5 @@
+set search_path to openrace;
+
 create table stages (
   id uuid primary key default gen_random_uuid(),
   race_id uuid not null references races(id) on delete cascade,

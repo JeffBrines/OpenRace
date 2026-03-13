@@ -1,3 +1,5 @@
+set search_path to openrace;
+
 alter table races enable row level security;
 alter table stages enable row level security;
 alter table riders enable row level security;

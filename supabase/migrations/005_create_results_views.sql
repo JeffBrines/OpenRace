@@ -1,3 +1,5 @@
+set search_path to openrace;
+
 -- Use DISTINCT ON to handle duplicate time records per rider+stage+type
 -- (e.g., corrections). Takes the most recent record by created_at.
 create or replace view stage_results as

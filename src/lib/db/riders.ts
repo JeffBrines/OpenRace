@@ -2,7 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
 import type { CreateRiderInput } from '@/lib/validators/rider'
 
-type Rider = Database['public']['Tables']['riders']['Row']
+type Rider = Database['openrace']['Tables']['riders']['Row']
 
 export async function createRider(
   supabase: SupabaseClient<Database>,

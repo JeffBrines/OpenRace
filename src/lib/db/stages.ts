@@ -3,8 +3,8 @@ import type { Database } from '@/lib/supabase/types'
 import type { CreateStageInput } from '@/lib/validators/race'
 import { generateToken } from '@/lib/utils/tokens'
 
-type Stage = Database['public']['Tables']['stages']['Row']
-type Race = Database['public']['Tables']['races']['Row']
+type Stage = Database['openrace']['Tables']['stages']['Row']
+type Race = Database['openrace']['Tables']['races']['Row']
 
 export async function createStage(
   supabase: SupabaseClient<Database>,

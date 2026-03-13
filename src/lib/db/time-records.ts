@@ -2,7 +2,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Database } from '@/lib/supabase/types'
 import type { CreateTimeRecordInput } from '@/lib/validators/time-record'
 
-type TimeRecord = Database['public']['Tables']['time_records']['Row']
+type TimeRecord = Database['openrace']['Tables']['time_records']['Row']
 
 export async function upsertTimeRecord(
   supabase: SupabaseClient<Database>,

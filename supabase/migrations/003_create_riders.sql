@@ -1,3 +1,5 @@
+set search_path to openrace;
+
 create type gender_type as enum ('male', 'female', 'non_binary');
 
 create table riders (

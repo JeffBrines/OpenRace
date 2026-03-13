@@ -1,3 +1,7 @@
+-- Create dedicated schema for OpenRace (shared Supabase instance)
+create schema if not exists openrace;
+set search_path to openrace;
+
 create type race_type as enum ('enduro', 'dh', 'xc');
 create type race_status as enum ('draft', 'active', 'complete');
 create type rider_id_mode as enum ('name_only', 'bib_only', 'both');
